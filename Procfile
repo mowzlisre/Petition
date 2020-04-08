@@ -1,1 +1,1 @@
-web: gunicorn petition.wsgi:application --log-file - 
+web: gunicorn petition.wsgi --log-file - 
