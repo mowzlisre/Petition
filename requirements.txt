@@ -1,0 +1,6 @@
+distlib==0.3.0
+Django==3.0.3
+pytz==2019.3
+requests==2.23.0
+sqlparse==0.3.0
+whitenoise==5.0.1

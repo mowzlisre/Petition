@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="card p-md-5 p-3 shadow-sm">
+        <h1 class="display-4">Hey, {{user.name}}. How can we help you?</h1>
+    </div>
+    <hr>
+    <div class="card">
+        <div class="w-100 row m-0 p-3">
+            <div class="border-right w-75 p-3">
+                <div class="card p-5">
+                    <h3>New Petition</h3>
+                    <hr class="m-0"><br>
+                    <form action="{% url 'new-petition' %}" method="post">
+                        {% csrf_token %}
+                        <label for="">Enter Your Name:</label>
+                        <input type="text" class="form-control" value="{{user.name}}" name="petitioner"><br>
+                        <label for="">Petition to:</label>
+                        <input type="text" class="form-control" name="petitionfor"><br>
+                        <label for="">Petition</label>
+                        <textarea type="text" class="form-control" name="petition"></textarea><br>
+                        <label for="">Attachment</label>
+                        <input type="file" class="btn" name="attachement" id=""><br>
+                        <button type="submit" class="btn btn-outline-secondary float-right">Submit Petition</button>
+                    </form>
+                </div>
+                <br>
+                <div class="card p-5">
+                    <h3 class="mb-0">Your Petitions</h3>
+                    <hr class="">
+                    {% for petition in petitions %}
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="h6">{{petition}}</a>
+                        </div>
+                        <p class="p-3">{{petition.petition|safe}}</p>
+                        <div class="card-footer">
+                            <a>Petitioned on : {{petition.date}} | Petition to : {{petition.petition_for}}</a>
+                        </div>
+                    </div>
+                    <br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="w-25 p-3">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

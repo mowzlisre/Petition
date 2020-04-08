@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  
+<div class="container">
+    <div class="card p-3 p-md-5 w-50 mx-auto">
+        <h1 class="display text-center">Login</h1>
+        <hr>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <label for="">Phone</label>
+            <input type="text" class="form-control" name="username"><br>
+            <label for="">Password</label>
+            <input type="password" class="form-control" name="password"><br>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <hr>
+        <p class="text-center" style="font-size: small;">You must login to file a petition. If you don't have an account, please sign up for a free account <a href="{% url 'public-register' %}">here</a></p>
+    </div>
+</div>
+
+{% endblock content %}

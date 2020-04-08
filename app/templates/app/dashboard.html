@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card p-md-5 p-3 shadow-sm">
+        <h1 class="display-4">Hey, {{user}}. Your activity page here!</h1>
+    </div>
+    <br>
+    
+    <div class="card p-md-5 p-3">
+        <h5>Pending petitions</h5>
+        <hr>
+        {% for petition in petitions %}
+        <div class="card">
+            <div class="card-header">
+                <a class="h6">{{petition}}</a>
+            </div>
+            <p class="p-3">{{petition.petition|safe}}</p>
+            <div class="card-footer">
+                <a>Petitioned on : {{petition.date}} | Petition by : {{petition.petitioner}} | Petition Due : {{petition.due}}</a>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
