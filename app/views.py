@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import User, Petition
 from django.contrib import messages
+from datetime import datetime, timedelta
 
 def home(request):
     if not request.user.is_authenticated:
@@ -8,7 +9,8 @@ def home(request):
     else:
         if request.user.designation == "Public":
             context = {
-                "petitions": Petition.objects.filter(petitioner=request.user)
+                "petitions": Petition.objects.filter(petitioner=request.user),
+                "users": User.objects.exclude(designation='Public')
             }
             return render(request, 'app/home.html', context)
         else:
@@ -20,15 +22,23 @@ def home(request):
 def newPetition(request):
     if request.method == "POST":
         petition = Petition()
-        petition.petitioner = request.POST.get("petitioner")
-        petition.petition_for = request.POST.get("petitionfor")
+        petition.petitioner = request.user
+        key = request.POST.get("petitionfor")
+        petition.petition_for = User.objects.get(id=key)
+        petition.subject = request.POST.get("subject")
         petition.petition = request.POST.get("petition")
         petition.attachments = request.POST.get("attachment")
+        petition.due = datetime.today() + timedelta(int(request.POST.get("due")))
         petition.save()
         return redirect('home')
         messages.success(request, 'Your petition has been filed and is awaited for review.')
 
-
+def addName(request):
+    if request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+        user.name = request.POST.get("username")
+        user.save()
+        return redirect('home')
 
 def public_register(request):
     if request.method == "POST":

@@ -2,6 +2,24 @@
 {% block content %}
 
 <div class="container">
+    {% if user.name == '' %}
+
+    <div class="card p-md-5 p-3 shadow-sm">
+        <form action="{% url 'add-name' %}" method="post">
+            {% csrf_token %}
+
+            <label for="">Please enter your name to proceed!</label>
+            <div class="row">
+                <div class="col">
+                    <input type="text" name="username" class="form-control col" placeholder="Enter your name...">
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-primary col">Proceed</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% else %}
     <div class="card p-md-5 p-3 shadow-sm">
         <h1 class="display-4">Hey, {{user.name}}. How can we help you?</h1>
     </div>
@@ -14,14 +32,20 @@
                     <hr class="m-0"><br>
                     <form action="{% url 'new-petition' %}" method="post">
                         {% csrf_token %}
-                        <label for="">Enter Your Name:</label>
-                        <input type="text" class="form-control" value="{{user.name}}" name="petitioner"><br>
                         <label for="">Petition to:</label>
-                        <input type="text" class="form-control" name="petitionfor"><br>
+                        <select type="text" class="form-control" name="petitionfor">
+                            {% for user in users %}
+                            <option value="{{user.id}}">{{user}}</option>
+                            {% endfor %}
+                        </select><br>
+                        <label for="">Subject</label>
+                        <input type="text" name="subject" class="form-control"><br>
                         <label for="">Petition</label>
                         <textarea type="text" class="form-control" name="petition"></textarea><br>
                         <label for="">Attachment</label>
-                        <input type="file" class="btn" name="attachement" id=""><br>
+                        <input type="url" class="form-control" name="attachment" id=""><br>
+                        <label for="">Due date</label>
+                        <input type="number" name="due" class="form-control"><br>
                         <button type="submit" class="btn btn-outline-secondary float-right">Submit Petition</button>
                     </form>
                 </div>
@@ -47,6 +71,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 
