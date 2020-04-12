@@ -1,1 +1,1 @@
-'web: gunicorn petition.wsgi --log-file -' 
+web: gunicorn petition.wsgi --log-file -
