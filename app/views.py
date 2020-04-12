@@ -15,7 +15,8 @@ def home(request):
             return render(request, 'app/home.html', context)
         else:
             context = {
-                "petitions": Petition.objects.filter(petition_for=request.user)
+                "petitions": Petition.objects.filter(petition_for=request.user, approved='False'),
+                "approved": Petition.objects.filter(petition_for=request.user, approved='True')
             }
             return render(request, 'app/dashboard.html', context)
 
@@ -29,6 +30,7 @@ def newPetition(request):
         petition.petition = request.POST.get("petition")
         petition.attachments = request.POST.get("attachment")
         petition.due = datetime.today() + timedelta(int(request.POST.get("due")))
+        petition.approved = "False"
         petition.save()
         return redirect('home')
         messages.success(request, 'Your petition has been filed and is awaited for review.')
@@ -39,6 +41,13 @@ def addName(request):
         user.name = request.POST.get("username")
         user.save()
         return redirect('home')
+
+def approve(request, pk):
+    if request.method == "POST":
+        petition = Petition.objects.get(id=pk)
+        petition.approved = "True"
+        petition.save()
+        return redirect("home")
 
 def public_register(request):
     if request.method == "POST":

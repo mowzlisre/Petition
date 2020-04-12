@@ -10,19 +10,42 @@
     <div class="card p-md-5 p-3">
         <h5>Pending petitions</h5>
         <hr>
-        {% for petition in petitions %}
+        {% for petition in petitions reversed %}
         <div class="card">
             <div class="card-header">
                 <a class="h6">{{petition}}</a>
             </div>
             <p class="p-3">{{petition.petition|safe}}</p>
             <div class="card-footer">
-                <a>Petitioned on : {{petition.date}} | Petition by : {{petition.petitioner}} | Petition Due : {{petition.due}}</a>
+                <a>Petitioned on : {{petition.date}} | Petition by : {{petition.petitioner.name}} | Petition Due : {{petition.due}}</a>
+            </div>
+        </div>
+        <br>
+        <form action="{% url 'approve' pk=petition.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success float-right">Approve</button>
+        </form>
+        <br>
+        {% endfor %}
+    </div>
+    <br>
+    <div class="card p-md-5 p-3">
+        <h5>Approved petitions</h5>
+        <hr>
+        {% for petition in approved reversed %}
+        <div class="card">
+            <div class="card-header">
+                <a class="h6">{{petition}}</a>
+            </div>
+            <p class="p-3">{{petition.petition|safe}}</p>
+            <div class="card-footer">
+                <a>Petitioned on : {{petition.date}} | Petition by : {{petition.petitioner.name}} | Petition Due : {{petition.due}}</a>
             </div>
         </div>
         <br>
         {% endfor %}
     </div>
+
 </div>
 
 {% endblock content %}

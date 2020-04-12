@@ -44,6 +44,7 @@
                         <textarea type="text" class="form-control" name="petition"></textarea><br>
                         <label for="">Attachment</label>
                         <input type="url" class="form-control" name="attachment" id=""><br>
+                        <input type="file" class="btn"><br>
                         <label for="">Due date</label>
                         <input type="number" name="due" class="form-control"><br>
                         <button type="submit" class="btn btn-outline-secondary float-right">Submit Petition</button>
@@ -53,14 +54,22 @@
                 <div class="card p-5">
                     <h3 class="mb-0">Your Petitions</h3>
                     <hr class="">
-                    {% for petition in petitions %}
+                    {% for petition in petitions reversed %}
                     <div class="card">
                         <div class="card-header">
                             <a class="h6">{{petition}}</a>
                         </div>
                         <p class="p-3">{{petition.petition|safe}}</p>
                         <div class="card-footer">
-                            <a>Petitioned on : {{petition.date}} | Petition to : {{petition.petition_for}}</a>
+                            <a>Petitioned on : {{petition.date}} | Petition to : {{petition.petition_for}} | 
+                                {% if petition.approved %}
+                                <a >
+                                    <i class="fa fa-check mx-2" style="color: green"></i>Approved</a>
+                                  {% else %}
+                                  <a >
+                                    <i class="fa fa-close mx-2" style="color: red"></i>Not Approved Yet</a>
+                                {% endif %}
+                            </a>
                         </div>
                     </div>
                     <br>

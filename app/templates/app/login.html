@@ -1,21 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-  
+
 <div class="container">
-    <div class="card p-3 p-md-5 w-50 mx-auto">
-        <h1 class="display text-center">Login</h1>
-        <hr>
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            <label for="">Phone</label>
-            <input type="text" class="form-control" name="username"><br>
-            <label for="">Password</label>
-            <input type="password" class="form-control" name="password"><br>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-        <hr>
-        <p class="text-center" style="font-size: small;">You must login to file a petition. If you don't have an account, please sign up for a free account <a href="{% url 'public-register' %}">here</a></p>
+    <div class="row">
+        <div class="col mr-md-5">
+            <img style="max-width: 100%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/1200px-Emblem_of_India.svg.png"
+                alt="">
+        </div>
+        <div class="card p-3 p-md-5 w-50 col-6">
+            <h1 class="display text-center">Login</h1>
+            <hr>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <label for="">Phone</label>
+                <input type="text" class="form-control" name="username"><br>
+                <label for="">Password</label>
+                <input type="password" class="form-control" name="password"><br>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <hr>
+            <p class="text-center" style="font-size: small;">You must login to file a petition. If you don't have an
+                account, please sign up for a free account <a href="{% url 'public-register' %}">here</a></p>
+        </div>
+        <div class="col ml-md-5">
+            <img style="max-width: 100%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/TamilNadu_Logo.svg/1200px-TamilNadu_Logo.svg.png"
+                alt="">
+        </div>
     </div>
 </div>
 

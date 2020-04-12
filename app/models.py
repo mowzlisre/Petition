@@ -14,7 +14,7 @@ class Petition(models.Model):
     attachments = models.URLField()
     date = models.DateField(auto_now_add=True)
     due = models.DateField()
-
+    approved = models.BooleanField()
     def __str__(self):
         return self.subject
     
